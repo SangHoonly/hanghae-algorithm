@@ -19,7 +19,7 @@ for node in graph.keys():
     graph[node].sort()
 
 
-# DFS
+# DFS (재귀)
 dfs_visit = {V}
 
 def dfs(cur_node):
@@ -31,6 +31,24 @@ def dfs(cur_node):
             dfs_visit.add(next_node)
             dfs(next_node)
 
+
+# DFS (스택)
+def dfs_stack(start_node):
+    visit = set()
+    stack = [start_node]
+
+    while stack:
+        cur_node = stack.pop()
+
+        if cur_node in visit: # 만일 스택에서 꺼낸 노드가 방문한 적이 있다면, 첨으로 되돌아가 스택에서 다시 뽑음.
+            continue
+
+        visit.add(cur_node) # 방문 처리
+
+        print(cur_node, end=' ')
+
+        for next_node in graph[cur_node][::-1]: # 그래프의 노드들은 정렬되어 있으므로, 번호가 작은 순으로 스택을 채우려면 리스트를 뒤집어야 함
+            stack.append(next_node)
 
 # BFS
 bfs_visit = set()
@@ -52,6 +70,7 @@ def bfs(start_node):
 
 
 # 두 함수 실행.
-dfs(V)
+
+dfs_stack(V)
 print()
 bfs(V)
